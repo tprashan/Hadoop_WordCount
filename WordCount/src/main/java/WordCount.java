@@ -23,8 +23,8 @@ public class WordCount extends Configured implements Tool {
         Job job = Job.getInstance(conf, "word count");
         job.setJarByClass(WordCount.class);
         job.setMapperClass(HadoopMapper.class);
-        job.setCombinerClass(IntSumReducer.class);
-        job.setReducerClass(IntSumReducer.class);
+        job.setCombinerClass(WordCountReducer.class);
+        job.setReducerClass(WordCountReducer.class);
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
         FileInputFormat.addInputPath(job, new Path(args[0]));
@@ -49,7 +49,7 @@ public class WordCount extends Configured implements Tool {
     }
 
 
-    public static class IntSumReducer
+    public static class WordCountReducer
             extends Reducer<Text, IntWritable, Text, IntWritable> {
         private IntWritable result = new IntWritable();
 
